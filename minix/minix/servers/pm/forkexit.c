@@ -127,6 +127,8 @@ int do_fork()
   if (rmc->mp_tracer != NO_TRACER)
 	sig_proc(rmc, SIGSTOP, TRUE /*trace*/, FALSE /* ksig */);
 
+  printf("Minix: PID %d created",new_pid);
+
   /* Do not reply until VFS is ready to process the fork
   * request
   */
@@ -260,6 +262,7 @@ int dump_core;			/* flag indicating whether to dump core */
  */
   register int proc_nr, proc_nr_e;
   int r;
+  int pid=(int)rmp->mp_pid;
   pid_t procgrp;
   struct mproc *p_mp;
   clock_t user_time, sys_time;
@@ -384,7 +387,7 @@ int dump_core;			/* flag indicating whether to dump core */
 			check_parent(rmp, TRUE /*try_cleanup*/);
 	}
   }
-
+  printf("Minix: PID %d created",pid);
   /* Send a hangup to the process' process group if it was a session leader. */
   if (procgrp != 0) check_sig(-procgrp, SIGHUP, FALSE /* ksig */);
 }
